@@ -1,4 +1,7 @@
 *.txt
 *.txt.*
-foo.*
-*.bar
+foo.*.txt
+foo.*.txt.audit.json
+*.bar*.txt
+*.bar*.txt.audit.json
+.*.swp

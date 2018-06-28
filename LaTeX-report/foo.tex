@@ -1,0 +1,50 @@
+\documentclass[11pt,twoside,openright]{memoir}
+
+\usepackage{tcolorbox}
+\usepackage[scaled]{beramono}
+\renewcommand*\familydefault{\ttdefault}
+\usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\usepackage{listings}
+
+\begin{document}
+
+    \lstset{ breaklines=true,
+             postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+             aboveskip=-8pt,belowskip=-12pt}
+
+    \begin{tcolorbox}[title=fooer]
+        \small
+        \begin{tabular}{rp{0.72\linewidth}}
+ID: & y23kkipm4p4y7kgdzuc1 \\
+Process: & fooer \\
+Command: & \begin{lstlisting}
+echo foo > fooer.foo.txt
+\end{lstlisting} \\
+Parameters:& \\
+Tags: & \\
+Start time: & 2018-06-27 17:50:51.437331897 +0200 CEST \\
+Finish time: & 2018-06-27 17:50:51.44444825 +0200 CEST \\
+Execution time: & 7 ms \\
+Upstreams: & \\
+        \end{tabular}
+    \end{tcolorbox}
+
+    \begin{tcolorbox}[title=foo2bar]
+        \small
+        \begin{tabular}{rp{0.72\linewidth}}
+ID: & omlcgx0izet4bprr7e5f \\
+Process: & foo2bar \\
+Command: & \begin{lstlisting}
+sed 's/foo/bar/g' ../fooer.foo.txt > fooer.foo.txt.foo2bar.bar.txt
+\end{lstlisting} \\
+Parameters:& \\
+Tags: & \\
+Start time: & 2018-06-27 17:50:51.445311702 +0200 CEST \\
+Finish time: & 2018-06-27 17:50:51.451388569 +0200 CEST \\
+Execution time: & 6 ms \\
+Upstreams: & \\
+        \end{tabular}
+    \end{tcolorbox}
+
+\end{document}
