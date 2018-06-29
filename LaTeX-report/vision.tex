@@ -1,4 +1,4 @@
-\documentclass[11pt,twoside,openright]{memoir}
+\documentclass[11pt,oneside,openright]{memoir}
 
 \usepackage{tcolorbox}
 \usepackage[scaled]{beramono}
@@ -6,14 +6,37 @@
 \usepackage[T1]{fontenc}
 \usepackage{tabularx}
 \usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\definecolor{color1}{RGB}{146,200,180}
+\definecolor{color2}{RGB}{124,206,89}
 
 \begin{document}
+\pagestyle{plain}
+\noindent
+\begin{minipage}{\textwidth}
+    \vspace{-8em}\hspace{-8em}
+    \includegraphics[width=9em]{images/scipipe_logo_bluegrey.pdf}
+\end{minipage}
 
+\noindent 
+{\huge\textbf{SciPipe workflow report}}
+\section*{Execution timeline}
+
+% Times
+% 1530175200 2018-06-28 8:40:00.000000000
+%
+%
+\section*{Tasks}
     \lstset{ breaklines=true,
              postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
              aboveskip=-8pt,belowskip=-12pt}
 
-    \begin{tcolorbox}[title=fooer]
+    \begin{tcolorbox}[ title=fooer, 
+                       colbacktitle=color1, 
+                       colback=color1!50!white,
+                       coltitle=black ]
         \small
         \begin{tabular}{rp{0.72\linewidth}}
 ID: & y23kkipm4p4y7kgdzuc1 \\
@@ -23,24 +46,22 @@ echo foo > fooer.foo.txt
 \end{lstlisting} \\
 Parameters:& \\
 Tags: & \\
-Start time: & 2018-06-27 17:50:51.437331897 +0200 CEST \\
+Start time:  & 2018-06-27 17:50:51.437331897 +0200 CEST \\
 Finish time: & 2018-06-27 17:50:51.44444825 +0200 CEST \\
 Execution time: & 7 ms \\
 Upstreams: & \\
         \end{tabular}
     \end{tcolorbox}
 
-    \begin{tcolorbox}[title=foo2bar]
+    \begin{tcolorbox}[ title=foo2bar, 
+                       colbacktitle=color2, 
+                       colback=color2!50!white, 
+                       coltitle=black ]
         \small
         \begin{tabular}{rp{0.72\linewidth}}
 ID: & omlcgx0izet4bprr7e5f \\
 Process: & foo2bar \\
-Command: & 
-\begin{tcblisting}{sharp corners, listing only, baseline=\dimexpr\csname tcb@height\endcsname-\normalbaselineskip\relax,after={}}
-sed 's/foo/bar/g' ../fooer.foo.txt > fooer.foo.txt.foo2bar.bar.txt
-\end{tcblisting} 
-
-\begin{lstlisting}
+Command: & \begin{lstlisting}
 sed 's/foo/bar/g' ../fooer.foo.txt > fooer.foo.txt.foo2bar.bar.txt
 \end{lstlisting} \\
 Parameters:& \\
