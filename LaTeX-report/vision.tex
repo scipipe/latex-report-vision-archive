@@ -8,6 +8,15 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\pgfplotstableread[col sep=comma]{
+y,start,end
+0,0,600
+1,600,1020
+}\loadedtable
 
 \definecolor{color1}{RGB}{146,200,180}
 \definecolor{color2}{RGB}{124,206,89}
@@ -22,12 +31,62 @@
 
 \noindent 
 {\huge\textbf{SciPipe workflow report}}
+\vspace{10pt}
+
+    \begin{tcolorbox}[ title=My workflow, ]
+    \small
+\begin{tabular}{rp{0.72\linewidth}}
+SciPipe version: & 0.7 \\
+Start time:  & 2018-06-28 8:40:00.000000000 +0200 CEST \\
+Finish time: & 2018-06-28 8:50:00.000000000 +0200 CEST \\
+Run time: &   \\
+\end{tabular}
+    \end{tcolorbox}
+
+
+
 \section*{Execution timeline}
+
+\begin{tikzpicture}
+  %\begin{axis}[title  = Contributions per category
+  %                        at LaTeX-Community.org,
+  %  xbar,
+  %  y axis line style = { opacity = 0 },
+  %  axis x line       = none,
+  %  tickwidth         = 0pt,
+  %  symbolic y coords = {fooer, foo2bar},
+  %  nodes near coords,
+  %]
+\begin{axis}[
+  xbar,
+  y axis line style = { opacity = 0 },
+  axis x line       = none,
+  tickwidth         = 0pt,
+  %ytick=data,   % ytick at every datapoint in the first \addplot
+  %axis on top,  % place axis lines and ticks on top
+  xbar stacked, % means that the bars from the different \addplots are stacked one after the other
+  y dir=reverse % means the y-axis increases downward
+]
+% make an invisible bar from zero to the start-value
+\addplot [draw=none, forget plot] table [col sep=comma,x=start, y=y]{\loadedtable};
+% then add the actual bar, stacked after the invisible one
+% for pgfplots the x-value is the length of the bar, so
+% we calculate end minus start 
+\addplot  +[fill=black,draw=none] table [x expr=\thisrow{end}-\thisrow{start}, y=y] {\loadedtable};
+
+% fill background
+\fill [black!30] (\pgfkeysvalueof{/pgfplots/xmin}, \pgfkeysvalueof{/pgfplots/ymax}) rectangle
+                 (\pgfkeysvalueof{/pgfplots/xmax}, 6.5);
+\end{axis}\end{tikzpicture}
 
 % Times
 % 1530175200 2018-06-28 8:40:00.000000000
+% 1530175800 2018-06-28 8:50:00.000000000
+% 1530176220 2018-06-28 8:50:00.000000000
 %
-%
+% 0
+% 600
+% 1020
 \section*{Tasks}
     \lstset{ breaklines=true,
              postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
@@ -46,8 +105,8 @@ echo foo > fooer.foo.txt
 \end{lstlisting} \\
 Parameters:& \\
 Tags: & \\
-Start time:  & 2018-06-27 17:50:51.437331897 +0200 CEST \\
-Finish time: & 2018-06-27 17:50:51.44444825 +0200 CEST \\
+Start time:  & 2018-06-28 8:40:00.000000000 +0200 CEST \\
+Finish time: & 2018-06-28 8:50:00.000000000 +0200 CEST \\
 Execution time: & 7 ms \\
 Upstreams: & \\
         \end{tabular}
@@ -66,8 +125,8 @@ sed 's/foo/bar/g' ../fooer.foo.txt > fooer.foo.txt.foo2bar.bar.txt
 \end{lstlisting} \\
 Parameters:& \\
 Tags: & \\
-Start time: & 2018-06-27 17:50:51.445311702 +0200 CEST \\
-Finish time: & 2018-06-27 17:50:51.451388569 +0200 CEST \\
+Start time: & 2018-06-28 8:50:00.000000000 +0200 CEST \\
+Finish time: & 2018-06-28 8:50:00.000000000 +0200 CEST \\
 Execution time: & 6 ms \\
 Upstreams: & \\
         \end{tabular}
