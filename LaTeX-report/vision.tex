@@ -14,8 +14,8 @@
 
 \pgfplotstableread[col sep=comma]{
 start,end,Name,color
-0,600,fooer,color1
-600,1020,foo2bar,color2
+0,600000,fooer,color1
+600000,1020000,foo2bar,color2
 }\loadedtable
 
 \definecolor{color1}{RGB}{146,200,180}
@@ -57,8 +57,8 @@ Run time: &   \\
     ytick=data, xbar stacked,
     bar shift=0pt,
     y dir=reverse,
-    xtick={1, 500, 1000},
-    xticklabels={1 ms, 500 ms, 1 s}
+    xtick={1, 500000, 1000000},
+    xticklabels={0, 5 min, 10 min},
 ]
 
 \addplot [draw=none, forget plot] table [x=end, y=Name]{\loadedtable};
@@ -67,13 +67,13 @@ Run time: &   \\
 \end{tikzpicture}
 
 % Times
-% 1530175200 2018-06-28 8:40:00.000000000
-% 1530175800 2018-06-28 8:50:00.000000000
-% 1530176220 2018-06-28 8:50:00.000000000
+% 1530175200000 2018-06-28 8:40:00.000000000
+% 1530175800000 2018-06-28 8:50:00.000000000
+% 1530176220000 2018-06-28 8:50:00.000000000
 %
 % 0
-% 600
-% 1020
+% 600000
+% 1020000
 \section*{Tasks}
     \lstset{ breaklines=true,
              postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
