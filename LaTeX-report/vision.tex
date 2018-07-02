@@ -54,17 +54,26 @@ Run time: &   \\
     tickwidth         = 0pt,
     width=12cm, height=3.5cm, enlarge y limits=0.5,
     symbolic y coords={fooer,foo2bar},
-    ytick=data, xbar stacked,
+    ytick=data,
     bar shift=0pt,
     y dir=reverse,
     xtick={1, 500000, 1000000},
     xticklabels={0, 5 min, 10 min},
 ]
 
-\addplot [draw=none, forget plot] table [x=end, y=Name]{\loadedtable};
-\addplot+[color1] table [x expr=\thisrow{start}-\thisrow{end}, y=Name]{\loadedtable};
+
+\addplot+[color1, forget plot]    coordinates { (600000,fooer) };
+
+\addplot+[color2, forget plot]    coordinates { (1020000,foo2bar) };
+\addplot+[white, forget plot] coordinates { (600000,foo2bar) };
+\addplot [white, forget plot] coordinates { (600000,foo2bar) };
+
 \end{axis}
 \end{tikzpicture}
+
+
+
+
 
 % Times
 % 1530175200000 2018-06-28 8:40:00.000000000
