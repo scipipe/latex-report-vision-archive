@@ -7,19 +7,29 @@
 \usepackage{tabularx}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
+\usepackage{xcolor}
+
+\definecolor{color1}{RGB}{146,200,180}
+\definecolor{color2}{RGB}{124,206,89}
+
+% from https://tex.stackexchange.com/a/128040/110842
+% filter to only get the current row in \pgfplotsinvokeforeach
+\pgfplotsset{
+    select row/.style={
+        x filter/.code={\ifnum\coordindex=#1\else\def\pgfmathresult{}\fi}
+    }
+}
 
 \pgfplotstableread[col sep=comma]{
 start,end,Name,color
 0,600000,fooer,color1
 600000,1020000,foo2bar,color2
 }\loadedtable
-
-\definecolor{color1}{RGB}{146,200,180}
-\definecolor{color2}{RGB}{124,206,89}
+\pgfplotstablegetrowsof{\loadedtable}
+\pgfmathsetmacro{\tablerows}{int(\pgfplotsretval-1)}
 
 \begin{document}
 \pagestyle{plain}
@@ -58,25 +68,26 @@ Run time: &   \\
     xbar, xmin=0,
     y axis line style = { opacity = 0 },
     tickwidth         = 0pt,
-    width=\textwidth,
-    symbolic y coords={fooer,foo2bar},
-    ytick=data,
+    width=12cm, height=3.5cm, enlarge y limits=0.5,
+    % next two lines also from https://tex.stackexchange.com/a/128040/110842,
+    ytick={0,...,\tablerows},
+    yticklabels from table={\loadedtable}{Name},
+    xbar stacked,
     bar shift=0pt,
-    y=0.6cm,
-    bar width=0.5cm,
     y dir=reverse,
-    xtick={1, 500000, 1000000},
-    xticklabels={0, 5 min, 10 min},
-    scaled x ticks=false
+    xtick={1, 300000, 600000, 900000, 1200000},
+    xticklabels={0, 5 min, 10 min, 15 min, 20 min},
+    scaled x ticks=false,
 ]
 
-
-\addplot+[color1, forget plot]    coordinates { (600000,fooer) };
-
-\addplot+[color2, forget plot]    coordinates { (1020000,foo2bar) };
-\addplot+[white, forget plot] coordinates { (600000,foo2bar) };
-\addplot [white, forget plot] coordinates { (600000,foo2bar) };
-
+\pgfplotsinvokeforeach{0,...,\tablerows}{
+    % get color from table, commands defined must be individual for each plot
+    % because the color is used in \end{axis} and therefore would otherwise
+    % use the last definition
+    \pgfplotstablegetelem{#1}{color}\of{\loadedtable}
+    \expandafter\edef\csname barcolor.#1\endcsname{\pgfplotsretval}
+    \addplot+[color=\csname barcolor.#1\endcsname] table [select row=#1, x expr=\thisrow{end}-\thisrow{start}, y expr=#1]{\loadedtable};
+}
 \end{axis}
 \end{tikzpicture}
 
